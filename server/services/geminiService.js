@@ -194,6 +194,37 @@ Always be encouraging, clear, and educational in your responses.`
     };
   }
 
+  async generateText(prompt) {
+    try {
+      if (!this.apiKey || this.apiKey === 'your_gemini_api_key_here') {
+        return 'Consider using spaced repetition to improve retention. Schedule hard topics during peak hours.';
+      }
+
+      const response = await axios.post(
+        `${GEMINI_API_URL}?key=${this.apiKey}`,
+        {
+          contents: [{ role: 'user', parts: [{ text: prompt }] }],
+          generationConfig: {
+            temperature: 0.7,
+            maxOutputTokens: 512
+          }
+        },
+        {
+          headers: { 'Content-Type': 'application/json' },
+          timeout: 30000
+        }
+      );
+
+      if (response.data.candidates && response.data.candidates[0]) {
+        return response.data.candidates[0].content.parts[0].text;
+      }
+    } catch (error) {
+      console.error('Gemini generateText Error:', error.message);
+    }
+    
+    return 'Consider using spaced repetition to improve retention.';
+  }
+
   async analyzeNotes(notes) {
     try {
       if (!this.apiKey || this.apiKey === 'your_gemini_api_key_here') {

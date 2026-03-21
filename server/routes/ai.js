@@ -78,6 +78,33 @@ router.post('/analyze-notes', protect, async (req, res, next) => {
   }
 });
 
+router.post('/analyze', protect, async (req, res, next) => {
+  try {
+    const { streak, retention, avgDaily, weakZone } = req.body;
+
+    const prompt = `You are an AI learning coach analyzing a student's learning analytics:
+- Current streak: ${streak} days
+- Retention rate: ${retention}%
+- Average daily study time: ${avgDaily} hours
+- Weakest area: ${weakZone}
+
+Provide 1-2 concise, actionable insights (max 50 words each) to help improve their learning. Focus on:
+1. Patterns that could be optimized
+2. Specific recommendations based on their data
+
+Format: Just return the insights as short sentences.`;
+
+    const response = await geminiService.generateText(prompt);
+
+    res.json({
+      success: true,
+      insights: response
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.post('/career-analysis', protect, async (req, res, next) => {
   try {
     const { skills, targetRole } = req.body;
