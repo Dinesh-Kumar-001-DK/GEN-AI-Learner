@@ -103,21 +103,21 @@ const Home = () => {
               icon="📝"
               title="Note Intelligence"
               description="Paste your raw notes and get structured summaries, flashcards, and quizzes generated instantly."
-              href="/ai-tutor"
+              href="/note-intelligence"
               delay={0.2}
             />
             <FeatureCard
               icon="📡"
               title="Flight Analytics"
               description="Deep insights into your study patterns, retention rates, and weak areas — visualized in your personal cockpit."
-              href="/dashboard"
+              href="/flight-analytics"
               delay={0.3}
             />
             <FeatureCard
               icon="🧭"
               title="Career Navigator"
               description="Map your skills against industry needs and get AI guidance on the exact gaps to close for your dream role."
-              href="/ai-tutor"
+              href="/career-navigator"
               delay={0.4}
             />
             <FeatureCard

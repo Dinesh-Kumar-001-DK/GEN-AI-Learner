@@ -24,6 +24,21 @@ const Login = () => {
     }
   };
 
+  const handleDemoLogin = async () => {
+    setFormData({ email: 'demo@aileraner.com', password: 'demo123' });
+    setError('');
+    setLoading(true);
+
+    try {
+      await login('demo@aileraner.com', 'demo123');
+      navigate('/dashboard');
+    } catch (err) {
+      setError('Demo login failed. Please register a new account.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="auth-page">
       <div className="auth-card">
@@ -67,13 +82,18 @@ const Login = () => {
           </button>
         </form>
 
+        <button 
+          type="button" 
+          className="btn btn-outline btn-lg auth-demo-btn" 
+          onClick={handleDemoLogin}
+          disabled={loading}
+        >
+          Try Demo Account
+        </button>
+
         <p className="auth-footer">
           Don't have an account? <Link to="/register">Create one</Link>
         </p>
-
-        <div className="demo-credentials">
-          <p className="mono">Demo: demo@aileraner.com / demo123</p>
-        </div>
       </div>
 
       <style>{`
@@ -100,6 +120,23 @@ const Login = () => {
           gap: 10px;
           margin-bottom: 2rem;
           justify-content: center;
+        }
+
+        .logo-icon {
+          width: 30px;
+          height: 30px;
+          background: linear-gradient(135deg, var(--cyan), var(--teal));
+          clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+        }
+
+        .logo-text {
+          font-size: 1.3rem;
+          font-weight: 800;
+          color: #fff;
+        }
+
+        .logo-text span {
+          color: var(--cyan);
         }
 
         .auth-title {
@@ -129,6 +166,11 @@ const Login = () => {
           margin-top: 1rem;
         }
 
+        .auth-demo-btn {
+          width: calc(100%);
+          margin-top: 0.75rem;
+        }
+
         .auth-footer {
           text-align: center;
           margin-top: 1.5rem;
@@ -139,18 +181,6 @@ const Login = () => {
         .auth-footer a {
           color: var(--cyan);
           font-weight: 600;
-        }
-
-        .demo-credentials {
-          margin-top: 1.5rem;
-          padding-top: 1.5rem;
-          border-top: 1px solid var(--border);
-          text-align: center;
-        }
-
-        .demo-credentials p {
-          font-size: 0.7rem;
-          color: var(--muted);
         }
       `}</style>
     </div>
