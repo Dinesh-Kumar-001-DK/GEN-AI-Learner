@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Aileraner — AI Learning Co-Pilot</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #050a12;
+    --surface: #0c1624;
+    --panel: #101e30;
+    --cyan: #00d4ff;
+    --cyan-dim: #00d4ff33;
+    --teal: #00ffc8;
+    --amber: #ffb800;
+    --text: #cde4f5;
+    --muted: #5a7a99;
+    --border: #1a3550;
+    --glow: 0 0 24px #00d4ff44;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── GRID BACKGROUND ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,212,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,255,0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 3rem;
+    height: 68px;
+    background: rgba(5,10,18,0.85);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .logo-icon {
+    width: 34px; height: 34px;
+    background: linear-gradient(135deg, var(--cyan), var(--teal));
+    clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+    animation: pulse-logo 3s ease-in-out infinite;
+  }
+
+  @keyframes pulse-logo {
+    0%,100% { filter: brightness(1); }
+    50%      { filter: brightness(1.4) drop-shadow(0 0 8px var(--cyan)); }
+  }
+
+  .logo-text {
+    font-size: 1.3rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    color: #fff;
+  }
+
+  .logo-text span { color: var(--cyan); }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2.4rem;
+  }
+
+  nav ul a {
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    position: relative;
+  }
+
+  nav ul a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0;
+    width: 0; height: 1px;
+    background: var(--cyan);
+    transition: width 0.2s;
+  }
+
+  nav ul a:hover { color: var(--cyan); }
+  nav ul a:hover::after { width: 100%; }
+
+  .nav-cta {
+    background: var(--cyan);
+    color: #050a12 !important;
+    padding: 8px 20px;
+    border-radius: 4px;
+    font-weight: 700 !important;
+    transition: box-shadow 0.2s, transform 0.15s !important;
+  }
+  .nav-cta:hover {
+    box-shadow: var(--glow) !important;
+    transform: translateY(-1px);
+    color: #050a12 !important;
+  }
+  .nav-cta::after { display: none !important; }
+
+  /* ── HERO ── */
+  #hero {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 120px 3rem 80px;
+    gap: 4rem;
+  }
+
+  .hero-content { flex: 1; max-width: 560px; }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--cyan);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border: 1px solid var(--cyan-dim);
+    padding: 6px 14px;
+    border-radius: 2px;
+    margin-bottom: 2rem;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .hero-tag::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--cyan);
+    animation: blink 1.4s step-start infinite;
+  }
+
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+  h1 {
+    font-size: clamp(2.6rem, 5vw, 4rem);
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    color: #fff;
+    margin-bottom: 1.4rem;
+    animation: fadeUp 0.7s 0.1s ease both;
+  }
+
+  h1 em {
+    font-style: normal;
+    color: var(--cyan);
+    display: block;
+  }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: var(--muted);
+    margin-bottom: 2.4rem;
+    font-weight: 400;
+    animation: fadeUp 0.7s 0.2s ease both;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    animation: fadeUp 0.7s 0.3s ease both;
+  }
+
+  .btn-primary {
+    background: var(--cyan);
+    color: #050a12;
+    padding: 14px 32px;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    transition: box-shadow 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover {
+    box-shadow: var(--glow);
+    transform: translateY(-2px);
+  }
+
+  .btn-outline {
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 14px 32px;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--cyan); color: var(--cyan); }
+
+  /* ── COCKPIT VISUAL ── */
+  .hero-visual {
+    flex: 1;
+    max-width: 480px;
+    position: relative;
+    animation: fadeUp 0.8s 0.4s ease both;
+  }
+
+  .cockpit {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.8rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 60px rgba(0,212,255,0.08);
+  }
+
+  .cockpit::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+    animation: scan 3s ease-in-out infinite;
+  }
+
+  @keyframes scan {
+    0%,100% { opacity: 0.4; } 50% { opacity: 1; }
+  }
+
+  .cockpit-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.4rem;
+  }
+
+  .cockpit-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .status-dot {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--teal);
+  }
+  .status-dot::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--teal);
+    animation: blink 1.4s step-start infinite;
+  }
+
+  .gauge-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.8rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .gauge {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 0.8rem;
+    text-align: center;
+  }
+
+  .gauge-val {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--cyan);
+    display: block;
+    line-height: 1;
+  }
+
+  .gauge-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 4px;
+    display: block;
+  }
+
+  .progress-list { display: flex; flex-direction: column; gap: 10px; }
+
+  .prog-item {}
+
+  .prog-head {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.78rem;
+    color: var(--text);
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+
+  .prog-bar {
+    height: 4px;
+    background: var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .prog-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--cyan), var(--teal));
+    animation: grow 1.2s ease both;
+    transform-origin: left;
+  }
+
+  @keyframes grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+  /* ── FEATURES ── */
+  #features {
+    position: relative; z-index: 1;
+    padding: 100px 3rem;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--cyan);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+  }
+
+  .section-sub {
+    color: var(--muted);
+    font-size: 1rem;
+    line-height: 1.7;
+    max-width: 480px;
+    margin-bottom: 3.5rem;
+    font-weight: 400;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.2rem;
+  }
+
+  .feat-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.8rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.25s, transform 0.2s, box-shadow 0.25s;
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+    color: inherit;
+  }
+
+  .feat-card:hover {
+    border-color: var(--cyan);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 32px rgba(0,212,255,0.12);
+  }
+
+  .feat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .feat-card:hover::before { opacity: 1; }
+
+  .feat-icon {
+    width: 40px; height: 40px;
+    border-radius: 8px;
+    background: var(--cyan-dim);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .feat-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.6rem;
+  }
+
+  .feat-desc {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.65;
+    font-weight: 400;
+  }
+
+  .feat-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 1rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--cyan);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: gap 0.2s;
+  }
+  .feat-card:hover .feat-link { gap: 10px; }
+
+  /* ── PLANS ── */
+  #plans {
+    position: relative; z-index: 1;
+    padding: 100px 3rem;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .plans-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.2rem;
+    margin-top: 3rem;
+  }
+
+  .plan-card {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    background: var(--panel);
+    position: relative;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .plan-card:hover { transform: translateY(-4px); }
+
+  .plan-card.featured {
+    border-color: var(--cyan);
+    box-shadow: 0 0 32px rgba(0,212,255,0.12);
+  }
+
+  .plan-badge {
+    position: absolute;
+    top: -12px; left: 50%;
+    transform: translateX(-50%);
+    background: var(--cyan);
+    color: #050a12;
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 14px;
+    border-radius: 20px;
+  }
+
+  .plan-name {
+    font-size: 0.75rem;
+    font-family: 'DM Mono', monospace;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 0.6rem;
+  }
+
+  .plan-price {
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+
+  .plan-price sup { font-size: 1rem; vertical-align: super; }
+  .plan-price span { font-size: 0.85rem; font-weight: 400; color: var(--muted); }
+
+  .plan-tagline {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-bottom: 1.6rem;
+    font-weight: 400;
+  }
+
+  .plan-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    margin-bottom: 2rem;
+  }
+
+  .plan-features li {
+    font-size: 0.85rem;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 400;
+  }
+
+  .plan-features li::before {
+    content: '✓';
+    color: var(--teal);
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .plan-btn {
+    display: block;
+    text-align: center;
+    padding: 12px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: all 0.2s;
+  }
+
+  .plan-btn.outline {
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+  .plan-btn.outline:hover { border-color: var(--cyan); color: var(--cyan); }
+
+  .plan-btn.solid {
+    background: var(--cyan);
+    color: #050a12;
+  }
+  .plan-btn.solid:hover { box-shadow: var(--glow); }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative; z-index: 1;
+    padding: 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+
+  .foot-links {
+    display: flex;
+    gap: 2rem;
+  }
+
+  .foot-links a {
+    font-size: 0.82rem;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .foot-links a:hover { color: var(--cyan); }
+
+  .foot-copy {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 760px) {
+    #hero { flex-direction: column; padding: 100px 1.5rem 60px; }
+    nav { padding: 0 1.5rem; }
+    nav ul { display: none; }
+    #features, #plans { padding: 70px 1.5rem; }
+    footer { padding: 2rem 1.5rem; flex-direction: column; text-align: center; }
+    .foot-links { flex-wrap: wrap; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="logo">
+    <div class="logo-icon"></div>
+    <span class="logo-text">Ailer<span>aner</span></span>
+  </a>
+  <ul>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#plans">Plans</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#docs">Docs</a></li>
+    <li><a href="#signup" class="nav-cta">Get Started</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-content">
+    <div class="hero-tag">AI-Powered Learning Co-Pilot</div>
+    <h1>Navigate Your<em>Learning Journey</em></h1>
+    <p class="hero-sub">Aileraner adapts to your pace, detects your blind spots, and charts your fastest route to mastery — like an aileron steering your flight through knowledge.</p>
+    <div class="hero-actions">
+      <a href="#signup" class="btn-primary">Start Free →</a>
+      <a href="#demo" class="btn-outline">Watch Demo</a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="cockpit">
+      <div class="cockpit-header">
+        <span class="cockpit-title">Flight Dashboard</span>
+        <span class="status-dot">AI Active</span>
+      </div>
+      <div class="gauge-row">
+        <div class="gauge">
+          <span class="gauge-val">94%</span>
+          <span class="gauge-label">Focus</span>
+        </div>
+        <div class="gauge">
+          <span class="gauge-val">3.2x</span>
+          <span class="gauge-label">Speed</span>
+        </div>
+        <div class="gauge">
+          <span class="gauge-val">47</span>
+          <span class="gauge-label">Streak</span>
+        </div>
+      </div>
+      <div class="progress-list">
+        <div class="prog-item">
+          <div class="prog-head"><span>Machine Learning</span><span>82%</span></div>
+          <div class="prog-bar"><div class="prog-fill" style="width:82%; animation-delay:0.2s"></div></div>
+        </div>
+        <div class="prog-item">
+          <div class="prog-head"><span>Neural Networks</span><span>61%</span></div>
+          <div class="prog-bar"><div class="prog-fill" style="width:61%; animation-delay:0.4s"></div></div>
+        </div>
+        <div class="prog-item">
+          <div class="prog-head"><span>Data Structures</span><span>93%</span></div>
+          <div class="prog-bar"><div class="prog-fill" style="width:93%; animation-delay:0.6s"></div></div>
+        </div>
+        <div class="prog-item">
+          <div class="prog-head"><span>System Design</span><span>38%</span></div>
+          <div class="prog-bar"><div class="prog-fill" style="width:38%; animation-delay:0.8s"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <p class="section-label">// capabilities</p>
+  <h2 class="section-title">Everything you need to fly faster</h2>
+  <p class="section-sub">Aileraner gives you an AI co-pilot that watches, adapts, and guides — turning scattered studying into precision learning.</p>
+
+  <div class="features-grid">
+    <a href="adaptive-tutor.html" class="feat-card">
+      <div class="feat-icon">🧠</div>
+      <div class="feat-title">Adaptive AI Tutor</div>
+      <div class="feat-desc">Real-time difficulty adjustment based on your responses, hesitation, and patterns — no more one-size-fits-all lessons.</div>
+      <span class="feat-link">Explore →</span>
+    </a>
+    <a href="smart-roadmaps.html" class="feat-card">
+      <div class="feat-icon">🗺️</div>
+      <div class="feat-title">Smart Roadmaps</div>
+      <div class="feat-desc">AI-generated, personalized learning paths that connect your current skills to your goal — updated as you grow.</div>
+      <span class="feat-link">Explore →</span>
+    </a>
+    <a href="note-intelligence.html" class="feat-card">
+      <div class="feat-icon">📝</div>
+      <div class="feat-title">Note Intelligence</div>
+      <div class="feat-desc">Paste your raw notes and get structured summaries, flashcards, and quizzes generated instantly.</div>
+      <span class="feat-link">Explore →</span>
+    </a>
+    <a href="flight-analytics.html" class="feat-card">
+      <div class="feat-icon">📡</div>
+      <div class="feat-title">Flight Analytics</div>
+      <div class="feat-desc">Deep insights into your study patterns, retention rates, and weak areas — visualized in your personal cockpit.</div>
+      <span class="feat-link">Explore →</span>
+    </a>
+    <a href="career-navigator.html" class="feat-card">
+      <div class="feat-icon">🧭</div>
+      <div class="feat-title">Career Navigator</div>
+      <div class="feat-desc">Map your skills against industry needs and get AI guidance on the exact gaps to close for your dream role.</div>
+      <span class="feat-link">Explore →</span>
+    </a>
+    <a href="copilot-network.html" class="feat-card">
+      <div class="feat-icon">🛰️</div>
+      <div class="feat-title">Co-Pilot Network</div>
+      <div class="feat-desc">Connect with learners on similar paths, share notes, and tackle challenges together in live sessions.</div>
+      <span class="feat-link">Explore →</span>
+    </a>
+  </div>
+</section>
+
+<!-- PLANS -->
+<section id="plans">
+  <p class="section-label">// pricing</p>
+  <h2 class="section-title">Choose your altitude</h2>
+  <p class="section-sub">Start free and scale as you grow. No hidden fees, cancel anytime.</p>
+
+  <div class="plans-grid">
+    <div class="plan-card">
+      <p class="plan-name">Glider</p>
+      <p class="plan-price"><sup>$</sup>0 <span>/ mo</span></p>
+      <p class="plan-tagline">Get off the ground</p>
+      <ul class="plan-features">
+        <li>5 AI sessions / month</li>
+        <li>Basic roadmap</li>
+        <li>Note summarizer</li>
+        <li>Community access</li>
+      </ul>
+      <a href="#signup" class="plan-btn outline">Start Free</a>
+    </div>
+
+    <div class="plan-card featured">
+      <div class="plan-badge">Most Popular</div>
+      <p class="plan-name">Co-Pilot</p>
+      <p class="plan-price"><sup>$</sup>19 <span>/ mo</span></p>
+      <p class="plan-tagline">Full autopilot mode</p>
+      <ul class="plan-features">
+        <li>Unlimited AI sessions</li>
+        <li>Smart adaptive roadmaps</li>
+        <li>Flashcards & quizzes</li>
+        <li>Flight analytics dashboard</li>
+        <li>Career navigator</li>
+      </ul>
+      <a href="#signup" class="plan-btn solid">Get Co-Pilot →</a>
+    </div>
+
+    <div class="plan-card">
+      <p class="plan-name">Squadron</p>
+      <p class="plan-price"><sup>$</sup>49 <span>/ mo</span></p>
+      <p class="plan-tagline">For teams & orgs</p>
+      <ul class="plan-features">
+        <li>Everything in Co-Pilot</li>
+        <li>Team analytics</li>
+        <li>Custom curriculum builder</li>
+        <li>SSO & admin controls</li>
+        <li>Dedicated support</li>
+      </ul>
+      <a href="#contact" class="plan-btn outline">Contact Sales</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#hero" class="logo" style="text-decoration:none">
+    <div class="logo-icon"></div>
+    <span class="logo-text">Ailer<span>aner</span></span>
+  </a>
+  <div class="foot-links">
+    <a href="#about">About</a>
+    <a href="#docs">Docs</a>
+    <a href="#blog">Blog</a>
+    <a href="#careers">Careers</a>
+    <a href="#privacy">Privacy</a>
+    <a href="#terms">Terms</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <span class="foot-copy">© 2026 Aileraner. All rights reserved.</span>
+</footer>
+
+</body>
+</html>
