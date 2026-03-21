@@ -1,7 +1,14 @@
 import axios from 'axios';
 
+const getBaseURL = () => {
+  if (import.meta.env.VITE_API_URL) {
+    return import.meta.env.VITE_API_URL;
+  }
+  return '/api';
+};
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || '/api',
+  baseURL: getBaseURL(),
   headers: {
     'Content-Type': 'application/json'
   }
@@ -72,6 +79,7 @@ export const aiApi = {
   chat: (messages, context) => api.post('/ai/chat', { messages, context }),
   roadmap: (topic, level) => api.post('/ai/roadmap', { topic, currentLevel: level }),
   analyzeNotes: (notes) => api.post('/ai/analyze-notes', { notes }),
+  analyze: (data) => api.post('/ai/analyze', data),
   careerAnalysis: (skills, role) => api.post('/ai/career-analysis', { skills, targetRole: role })
 };
 
