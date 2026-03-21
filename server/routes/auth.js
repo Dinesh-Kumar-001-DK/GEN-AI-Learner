@@ -1,3 +1,5 @@
+const express = require('express');
+const router = express.Router();
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
@@ -7,7 +9,7 @@ const generateToken = (id) => {
   });
 };
 
-const register = async (req, res, next) => {
+router.post('/register', async (req, res, next) => {
   try {
     const { name, email, password, learningGoal } = req.body;
 
@@ -46,9 +48,9 @@ const register = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-};
+});
 
-const login = async (req, res, next) => {
+router.post('/login', async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
@@ -87,6 +89,6 @@ const login = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-};
+});
 
-module.exports = { register, login };
+module.exports = router;

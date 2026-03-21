@@ -20,7 +20,8 @@ router.get('/:courseId', protect, async (req, res, next) => {
         description: quiz.description,
         passingScore: quiz.passingScore,
         timeLimit: quiz.timeLimit,
-        questionCount: quiz.questions.length
+        questionCount: quiz.questions.length,
+        questions: quiz.questions
       }
     });
   } catch (error) {
