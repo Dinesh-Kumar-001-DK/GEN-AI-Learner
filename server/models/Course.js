@@ -9,6 +9,10 @@ const lessonSchema = new mongoose.Schema({
     type: String,
     default: ''
   },
+  youtubeUrl: {
+    type: String,
+    default: ''
+  },
   duration: {
     type: Number,
     default: 0
@@ -16,7 +20,22 @@ const lessonSchema = new mongoose.Schema({
   content: {
     type: String,
     default: ''
-  }
+  },
+  summary: {
+    type: String,
+    default: ''
+  },
+  keyPoints: [{
+    type: String
+  }],
+  codeExample: {
+    type: String,
+    default: ''
+  },
+  resources: [{
+    title: String,
+    url: String
+  }]
 });
 
 const moduleSchema = new mongoose.Schema({

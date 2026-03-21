@@ -16,6 +16,7 @@ const CourseDetail = () => {
   const [loading, setLoading] = useState(true);
   const [enrolling, setEnrolling] = useState(false);
   const [expandedModules, setExpandedModules] = useState({});
+  const [activeLesson, setActiveLesson] = useState(null);
 
   useEffect(() => {
     fetchCourse();
@@ -70,6 +71,22 @@ const CourseDetail = () => {
     }));
   };
 
+  const openLesson = (moduleIndex, lessonIndex) => {
+    const lesson = course.modules[moduleIndex].lessons[lessonIndex];
+    const lessonId = `${moduleIndex}-${lessonIndex}`;
+    setActiveLesson({ ...lesson, moduleIndex, lessonIndex, lessonId });
+  };
+
+  const closeLesson = () => {
+    setActiveLesson(null);
+  };
+
+  const getYouTubeEmbedUrl = (url) => {
+    if (!url) return null;
+    const videoId = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([^&\s]+)/);
+    return videoId ? `https://www.youtube.com/embed/${videoId[1]}` : null;
+  };
+
   const isEnrolled = user?.enrolledCourses?.includes(id) || progress;
 
   if (loading) {
@@ -115,9 +132,9 @@ const CourseDetail = () => {
                 <p className="course-desc">{course.description}</p>
 
                 <div className="course-stats">
-                  <span>⭐ {course.rating.toFixed(1)}</span>
-                  <span>👥 {course.enrolledCount.toLocaleString()} students</span>
-                  <span>⏱ {Math.round(course.totalDuration / 60)} hours</span>
+                  <span>⭐ {course.rating?.toFixed(1) || '4.8'}</span>
+                  <span>👥 {course.enrolledCount?.toLocaleString() || 0} students</span>
+                  <span>⏱ {Math.round((course.totalDuration || 0) / 60)} hours</span>
                 </div>
 
                 {course.instructor && (
@@ -167,16 +184,20 @@ const CourseDetail = () => {
                           {module.lessons.map((lesson, lessonIndex) => {
                             const lessonId = `${moduleIndex}-${lessonIndex}`;
                             const isCompleted = progress?.completedLessons?.includes(lessonId);
+                            const hasVideo = lesson.videoUrl || lesson.youtubeUrl;
 
                             return (
                               <div 
                                 key={lessonIndex} 
-                                className={`lesson-item ${isCompleted ? 'completed' : ''}`}
+                                className={`lesson-item ${isCompleted ? 'completed' : ''} ${hasVideo ? 'has-video' : ''}`}
+                                onClick={() => openLesson(moduleIndex, lessonIndex)}
+                                style={{ cursor: 'pointer' }}
                               >
                                 <span className="lesson-icon">
                                   {isCompleted ? '✓' : '▶'}
                                 </span>
                                 <span className="lesson-title">{lesson.title}</span>
+                                {hasVideo && <span className="lesson-video-badge">📹</span>}
                                 <span className="lesson-duration mono">{lesson.duration}min</span>
                               </div>
                             );
@@ -238,6 +259,125 @@ const CourseDetail = () => {
           </div>
         </div>
       </main>
+
+      {activeLesson && (
+        <div className="lesson-modal-overlay" onClick={closeLesson}>
+          <div className="lesson-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="lesson-modal-header">
+              <div className="lesson-modal-info">
+                <Badge variant="cyan">Module {activeLesson.moduleIndex + 1}</Badge>
+                <h2>{activeLesson.title}</h2>
+              </div>
+              <button className="lesson-modal-close" onClick={closeLesson}>✕</button>
+            </div>
+
+            <div className="lesson-modal-body">
+              {activeLesson.videoUrl || activeLesson.youtubeUrl ? (
+                <div className="lesson-video-container">
+                  <iframe
+                    src={getYouTubeEmbedUrl(activeLesson.videoUrl || activeLesson.youtubeUrl)}
+                    title={activeLesson.title}
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+              ) : (
+                <div className="lesson-no-video">
+                  <span>📹</span>
+                  <p>No video available for this lesson</p>
+                </div>
+              )}
+
+              <div className="lesson-content">
+                <div className="lesson-section">
+                  <h3>📋 Summary</h3>
+                  <p className="lesson-summary">
+                    {activeLesson.summary || 
+                      `In this lesson, we'll explore the key concepts of "${activeLesson.title}". ` +
+                      `This module covers essential topics that build upon the previous lessons. ` +
+                      `Make sure to follow along with the code examples provided below.`}
+                  </p>
+                </div>
+
+                {activeLesson.keyPoints && (
+                  <div className="lesson-section">
+                    <h3>🎯 Key Points</h3>
+                    <ul className="lesson-key-points">
+                      {activeLesson.keyPoints.map((point, i) => (
+                        <li key={i}>{point}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {activeLesson.codeExample && (
+                  <div className="lesson-section">
+                    <h3>💻 Code Example</h3>
+                    <pre className="lesson-code">
+                      <code>{activeLesson.codeExample}</code>
+                    </pre>
+                  </div>
+                )}
+
+                {!activeLesson.codeExample && (
+                  <div className="lesson-section">
+                    <h3>💻 Sample Code</h3>
+                    <pre className="lesson-code">
+                      <code>{`# Sample code for: ${activeLesson.title}
+
+# This is a placeholder example
+# In a real course, this would contain
+# actual working code for the lesson
+
+def learn_concept():
+    """Learn the key concept from this lesson."""
+    concept = "${activeLesson.title}"
+    print(f"Learning: {concept}")
+    
+    # Key steps:
+    # 1. Understand the basics
+    # 2. Practice with examples
+    # 3. Build your own project
+    
+    return "Great job!"
+
+# Try running this:
+learn_concept()`}</code>
+                    </pre>
+                  </div>
+                )}
+
+                {activeLesson.resources && (
+                  <div className="lesson-section">
+                    <h3>📚 Resources</h3>
+                    <ul className="lesson-resources">
+                      {activeLesson.resources.map((resource, i) => (
+                        <li key={i}>
+                          <a href={resource.url} target="_blank" rel="noopener noreferrer">
+                            {resource.title || resource.url}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="lesson-modal-footer">
+              <span className="lesson-duration-info">
+                ⏱ {activeLesson.duration} minutes
+              </span>
+              {progress && (
+                <span className="lesson-progress-info">
+                  Progress: {progress.percentComplete}%
+                </span>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
 
       <Footer />
 
@@ -399,6 +539,15 @@ const CourseDetail = () => {
           gap: 0.8rem;
           padding: 0.8rem 1.2rem 0.8rem 3.5rem;
           font-size: 0.85rem;
+          transition: background 0.2s;
+        }
+
+        .lesson-item:hover {
+          background: var(--surface);
+        }
+
+        .lesson-item.has-video {
+          background: rgba(0, 212, 255, 0.03);
         }
 
         .lesson-item.completed .lesson-icon {
@@ -412,6 +561,10 @@ const CourseDetail = () => {
 
         .lesson-title {
           flex: 1;
+        }
+
+        .lesson-video-badge {
+          font-size: 0.9rem;
         }
 
         .lesson-duration {
@@ -486,6 +639,192 @@ const CourseDetail = () => {
           color: var(--muted);
         }
 
+        /* Lesson Modal Styles */
+        .lesson-modal-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: rgba(0, 0, 0, 0.8);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 1000;
+          padding: 2rem;
+        }
+
+        .lesson-modal {
+          background: var(--bg-primary);
+          border: 1px solid var(--border);
+          border-radius: var(--radius-lg);
+          width: 100%;
+          max-width: 900px;
+          max-height: 90vh;
+          overflow: hidden;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .lesson-modal-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          padding: 1.5rem;
+          border-bottom: 1px solid var(--border);
+          background: var(--surface);
+        }
+
+        .lesson-modal-info h2 {
+          font-size: 1.3rem;
+          margin-top: 0.5rem;
+        }
+
+        .lesson-modal-close {
+          background: none;
+          border: none;
+          color: var(--muted);
+          font-size: 1.5rem;
+          cursor: pointer;
+          padding: 0.5rem;
+          line-height: 1;
+          transition: color 0.2s;
+        }
+
+        .lesson-modal-close:hover {
+          color: var(--text);
+        }
+
+        .lesson-modal-body {
+          flex: 1;
+          overflow-y: auto;
+          padding: 1.5rem;
+        }
+
+        .lesson-video-container {
+          position: relative;
+          width: 100%;
+          padding-bottom: 56.25%;
+          background: var(--surface);
+          border-radius: var(--radius);
+          overflow: hidden;
+          margin-bottom: 1.5rem;
+        }
+
+        .lesson-video-container iframe {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+        }
+
+        .lesson-no-video {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          padding: 3rem;
+          background: var(--surface);
+          border-radius: var(--radius);
+          margin-bottom: 1.5rem;
+          color: var(--muted);
+        }
+
+        .lesson-no-video span {
+          font-size: 3rem;
+          margin-bottom: 1rem;
+        }
+
+        .lesson-content {
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem;
+        }
+
+        .lesson-section {
+          background: var(--panel);
+          border: 1px solid var(--border);
+          border-radius: var(--radius);
+          padding: 1.2rem;
+        }
+
+        .lesson-section h3 {
+          font-size: 0.95rem;
+          margin-bottom: 0.8rem;
+          color: var(--cyan);
+        }
+
+        .lesson-summary {
+          font-size: 0.9rem;
+          line-height: 1.7;
+          color: var(--text);
+        }
+
+        .lesson-key-points {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+        }
+
+        .lesson-key-points li {
+          font-size: 0.85rem;
+          padding: 0.4rem 0;
+          padding-left: 1.5rem;
+          position: relative;
+        }
+
+        .lesson-key-points li::before {
+          content: "→";
+          position: absolute;
+          left: 0;
+          color: var(--cyan);
+        }
+
+        .lesson-code {
+          background: var(--surface);
+          border: 1px solid var(--border);
+          border-radius: var(--radius);
+          padding: 1rem;
+          overflow-x: auto;
+          font-family: 'Fira Code', 'Consolas', monospace;
+          font-size: 0.82rem;
+          line-height: 1.6;
+          color: var(--text);
+          white-space: pre-wrap;
+          word-break: break-word;
+        }
+
+        .lesson-resources {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+        }
+
+        .lesson-resources li {
+          padding: 0.4rem 0;
+        }
+
+        .lesson-resources a {
+          color: var(--cyan);
+          text-decoration: none;
+          font-size: 0.85rem;
+        }
+
+        .lesson-resources a:hover {
+          text-decoration: underline;
+        }
+
+        .lesson-modal-footer {
+          display: flex;
+          justify-content: space-between;
+          padding: 1rem 1.5rem;
+          border-top: 1px solid var(--border);
+          background: var(--surface);
+          font-size: 0.8rem;
+          color: var(--muted);
+        }
+
         @media (max-width: 900px) {
           .course-detail-grid {
             grid-template-columns: 1fr;
@@ -493,6 +832,10 @@ const CourseDetail = () => {
 
           .enroll-card {
             position: static;
+          }
+
+          .lesson-modal-overlay {
+            padding: 1rem;
           }
         }
       `}</style>
