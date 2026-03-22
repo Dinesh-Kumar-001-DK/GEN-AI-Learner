@@ -26,15 +26,15 @@ Aileraner is a full-stack, AI-assisted online learning platform with an aviation
 
 ### Core Features
 
-| Feature | Description |
-|---|---|
-| 🧭 **AI Tutor** | Chat-based AI assistant for real-time learning guidance |
-| 📚 **Course Catalog** | Searchable, filterable course library with rich detail pages |
-| 📊 **Dashboard** | KPI gauges, progress summaries, upcoming sessions |
-| ✈️ **Live Sessions** | Scheduled and live instructor-led learning sessions |
-| 🧠 **Smart Quizzes** | Adaptive quizzes with explanations and score tracking |
-| 📈 **Progress Tracker** | Visual roadmap of learning milestones and completion stats |
-| 🔐 **Authentication** | JWT-based register/login with protected routes |
+| Feature                 | Description                                                  |
+| ----------------------- | ------------------------------------------------------------ |
+| 🧭 **AI Tutor**         | Chat-based AI assistant for real-time learning guidance      |
+| 📚 **Course Catalog**   | Searchable, filterable course library with rich detail pages |
+| 📊 **Dashboard**        | KPI gauges, progress summaries, upcoming sessions            |
+| ✈️ **Live Sessions**    | Scheduled and live instructor-led learning sessions          |
+| 🧠 **Smart Quizzes**    | Adaptive quizzes with explanations and score tracking        |
+| 📈 **Progress Tracker** | Visual roadmap of learning milestones and completion stats   |
+| 🔐 **Authentication**   | JWT-based register/login with protected routes               |
 
 ---
 
@@ -42,25 +42,25 @@ Aileraner is a full-stack, AI-assisted online learning platform with an aviation
 
 ### Backend (`server/`)
 
-| Package | Version | Purpose |
-|---|---|---|
-| `express` | ^4.18 | HTTP framework |
-| `mongoose` | ^8.x | MongoDB ODM |
-| `jsonwebtoken` | ^9.x | JWT auth tokens |
-| `bcryptjs` | ^2.x | Password hashing |
-| `cors` | ^2.x | Cross-origin requests |
-| `dotenv` | ^16.x | Environment variables |
-| `nodemon` | dev | Auto-restart in dev |
+| Package        | Version | Purpose               |
+| -------------- | ------- | --------------------- |
+| `express`      | ^4.18   | HTTP framework        |
+| `mongoose`     | ^8.x    | MongoDB ODM           |
+| `jsonwebtoken` | ^9.x    | JWT auth tokens       |
+| `bcryptjs`     | ^2.x    | Password hashing      |
+| `cors`         | ^2.x    | Cross-origin requests |
+| `dotenv`       | ^16.x   | Environment variables |
+| `nodemon`      | dev     | Auto-restart in dev   |
 
 ### Frontend (`client/`)
 
-| Package | Version | Purpose |
-|---|---|---|
-| `react` | ^18 | UI framework |
-| `react-dom` | ^18 | DOM renderer |
-| `react-router-dom` | ^6 | Client-side routing |
-| `axios` | ^1.x | HTTP client |
-| `vite` | ^5 | Build tool & dev server |
+| Package            | Version | Purpose                 |
+| ------------------ | ------- | ----------------------- |
+| `react`            | ^18     | UI framework            |
+| `react-dom`        | ^18     | DOM renderer            |
+| `react-router-dom` | ^6      | Client-side routing     |
+| `axios`            | ^1.x    | HTTP client             |
+| `vite`             | ^5      | Build tool & dev server |
 
 ---
 
@@ -72,38 +72,38 @@ Aileraner uses a proprietary design system. Every UI element references the toke
 
 ```css
 :root {
-  --bg:       #050a12;   /* Page background */
-  --surface:  #0c1624;   /* Card layer 1 */
-  --panel:    #101e30;   /* Card layer 2 */
-  --cyan:     #00d4ff;   /* Primary accent */
+  --bg: #050a12; /* Page background */
+  --surface: #0c1624; /* Card layer 1 */
+  --panel: #101e30; /* Card layer 2 */
+  --cyan: #00d4ff; /* Primary accent */
   --cyan-dim: #00d4ff33; /* Cyan at 20% */
-  --teal:     #00ffc8;   /* Success / online */
-  --amber:    #ffb800;   /* Warning / ETA */
-  --red:      #ff4e6a;   /* Danger / live */
-  --text:     #cde4f5;   /* Body text */
-  --muted:    #5a7a99;   /* Labels / placeholders */
-  --border:   #1a3550;   /* All borders */
-  --glow:     0 0 24px #00d4ff44;
+  --teal: #00ffc8; /* Success / online */
+  --amber: #ffb800; /* Warning / ETA */
+  --red: #ff4e6a; /* Danger / live */
+  --text: #cde4f5; /* Body text */
+  --muted: #5a7a99; /* Labels / placeholders */
+  --border: #1a3550; /* All borders */
+  --glow: 0 0 24px #00d4ff44;
 }
 ```
 
 ### Typography
 
-| Font | Role |
-|---|---|
-| `Syne` (400–800) | All headings, body text, nav, buttons |
-| `DM Mono` (300–400) | Labels, tags, badges, metadata, code |
+| Font                | Role                                  |
+| ------------------- | ------------------------------------- |
+| `Syne` (400–800)    | All headings, body text, nav, buttons |
+| `DM Mono` (300–400) | Labels, tags, badges, metadata, code  |
 
 ### Key Animation Keyframes
 
-| Name | Usage |
-|---|---|
-| `fadeUp` | Page entry — all hero content, staggered 0.1s delays |
-| `scan` | Top border of cockpit widget (3s infinite) |
-| `pulse-logo` | Logo icon pulse (3s infinite) |
-| `blink` | Status dots and page tags (1.4s step-start) |
-| `bounce` | AI Tutor typing dots (1.2s infinite) |
-| `grow` | Progress bar fill (1.2s from `scaleX(0)`) |
+| Name         | Usage                                                |
+| ------------ | ---------------------------------------------------- |
+| `fadeUp`     | Page entry — all hero content, staggered 0.1s delays |
+| `scan`       | Top border of cockpit widget (3s infinite)           |
+| `pulse-logo` | Logo icon pulse (3s infinite)                        |
+| `blink`      | Status dots and page tags (1.4s step-start)          |
+| `bounce`     | AI Tutor typing dots (1.2s infinite)                 |
+| `grow`       | Progress bar fill (1.2s from `scaleX(0)`)            |
 
 ---
 
@@ -262,6 +262,7 @@ POST   /quizzes/:id/submit   → { score, passed, results } [protected]
 ### `/` — Home (Landing Page)
 
 **Sections:**
+
 1. **Hero** — Large H1 with cyan em accent, lead paragraph, two CTAs (primary + outline), animated status dot "AI Active"
 2. **Features Grid** — 6 feature cards using `auto-fit, minmax(260px, 1fr)` grid with hover-lift animation
 3. **Cockpit Demo** — Mock dashboard widget showing KPI gauges and a session list
@@ -273,6 +274,7 @@ POST   /quizzes/:id/submit   → { score, passed, results } [protected]
 
 **Layout:** Centered card on dark background  
 **Elements:**
+
 - Logo at top
 - Form inputs with `var(--border)` underline style
 - Primary submit button
@@ -285,11 +287,13 @@ POST   /quizzes/:id/submit   → { score, passed, results } [protected]
 
 **Layout:** Padded main with 2-column wide grid  
 **Left column:**
+
 - KPI row (4 gauges): Courses Enrolled, Lessons Completed, Quiz Average, Study Hours
 - Recent Courses (progress bars)
 - Upcoming Sessions list (with `live`, `soon`, `open` status badges)
 
 **Right column:**
+
 - Cockpit widget with AI status dot
 - "Continue Learning" panel
 
@@ -299,8 +303,9 @@ POST   /quizzes/:id/submit   → { score, passed, results } [protected]
 
 **Layout:** Search/filter bar + features grid  
 **Elements:**
+
 - Text search input
-- Category filter pills  
+- Category filter pills
 - Course cards with thumbnail, difficulty badge, rating, enroll CTA
 
 ---
@@ -317,6 +322,7 @@ POST   /quizzes/:id/submit   → { score, passed, results } [protected]
 
 **Layout:** Full-height chat interface  
 **Elements:**
+
 - Chat bubble history (user + AI messages)
 - Typing dots animation when AI is "thinking"
 - Input bar at bottom with send button
@@ -328,6 +334,7 @@ POST   /quizzes/:id/submit   → { score, passed, results } [protected]
 
 **Layout:** Single-question card with progress bar  
 **Elements:**
+
 - Question text + 4 option buttons
 - Next button (disabled until option selected)
 - Results screen: score, pass/fail badge, explain overlay
@@ -338,6 +345,7 @@ POST   /quizzes/:id/submit   → { score, passed, results } [protected]
 
 **Layout:** Roadmap timeline + KPI stats  
 **Elements:**
+
 - Vertical timeline with pulsing node for current milestone
 - Course completion list with `var(--teal)` teal progress fills
 - Overall stats gauge row
@@ -346,18 +354,18 @@ POST   /quizzes/:id/submit   → { score, passed, results } [protected]
 
 ## 7. Component Library
 
-| Component | Props | Notes |
-|---|---|---|
-| `<Navbar>` | `showBack?: bool` | Shows back button on feature pages |
-| `<Footer>` | — | Always shown at page bottom |
-| `<PageTag>` | `label, emoji?` | Blinking dot pill badge |
-| `<FeatureCard>` | `icon, title, desc, href` | Hover-lift card |
-| `<Panel>` | `header, children` | Dark panel with surface header |
-| `<ProgressBar>` | `percent` | Animated cyan→teal bar |
-| `<Gauge>` | `value, label` | KPI stat widget |
-| `<StatusDot>` | `label, color?` | Blinking status dot |
-| `<Badge>` | `label, variant?` | Mono pill badge |
-| `<Button>` | `variant, href?, onClick?` | primary / outline |
+| Component       | Props                      | Notes                              |
+| --------------- | -------------------------- | ---------------------------------- |
+| `<Navbar>`      | `showBack?: bool`          | Shows back button on feature pages |
+| `<Footer>`      | —                          | Always shown at page bottom        |
+| `<PageTag>`     | `label, emoji?`            | Blinking dot pill badge            |
+| `<FeatureCard>` | `icon, title, desc, href`  | Hover-lift card                    |
+| `<Panel>`       | `header, children`         | Dark panel with surface header     |
+| `<ProgressBar>` | `percent`                  | Animated cyan→teal bar             |
+| `<Gauge>`       | `value, label`             | KPI stat widget                    |
+| `<StatusDot>`   | `label, color?`            | Blinking status dot                |
+| `<Badge>`       | `label, variant?`          | Mono pill badge                    |
+| `<Button>`      | `variant, href?, onClick?` | primary / outline                  |
 
 ---
 
@@ -404,33 +412,15 @@ npm run dev      # Runs on http://localhost:5173
 
 ---
 
-## 10. Deployment Guide
-
-### Backend → Render / Railway
-
-1. Push `server/` to a GitHub repo
-2. Create a new Web Service on [Render](https://render.com)
-3. Set environment variables (MONGO_URI, JWT_SECRET, PORT)
-4. Build command: `npm install`
-5. Start command: `node index.js`
-
-### Frontend → Vercel / Netlify
-
-1. Push `client/` to a GitHub repo
-2. Connect to Vercel or Netlify
-3. Build command: `npm run build`
-4. Output directory: `dist`
-5. Set `VITE_API_URL` env var to your Render backend URL
-
 ### Update Axios Base URL for Production
 
 ```js
 // src/api/axios.js
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
+  baseURL: import.meta.env.VITE_API_URL || "http://localhost:5000/api",
 });
 ```
 
 ---
 
-*Document version 1.0 — Aileraner MERN Stack Build*
+_Document version 1.0 — Aileraner MERN Stack Build_

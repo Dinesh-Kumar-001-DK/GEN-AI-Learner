@@ -18,6 +18,7 @@ A full-stack MERN (MongoDB, Express, React, Node.js) application with an aviatio
 ## Tech Stack
 
 ### Backend
+
 - Node.js + Express
 - MongoDB + Mongoose
 - JWT Authentication
@@ -25,6 +26,7 @@ A full-stack MERN (MongoDB, Express, React, Node.js) application with an aviatio
 - bcryptjs for password hashing
 
 ### Frontend
+
 - React 18 + Vite
 - React Router v6
 - Axios for API calls
@@ -78,6 +80,7 @@ npm install
 ### Running Locally
 
 **Terminal 1 — Backend:**
+
 ```bash
 cd server
 npm run dev
@@ -85,6 +88,7 @@ npm run dev
 ```
 
 **Terminal 2 — Frontend:**
+
 ```bash
 cd client
 npm run dev
@@ -99,6 +103,7 @@ npm run seed
 ```
 
 This creates:
+
 - 6 sample courses (ML, React, Data Science, DevOps, Deep Learning, System Design)
 - 2 quizzes
 - 4 live sessions
@@ -177,32 +182,39 @@ GEN AILERNER/
 ## API Endpoints
 
 ### Authentication
+
 - `POST /api/auth/register` — Create new account
 - `POST /api/auth/login` — Login and get JWT token
 
 ### Users
+
 - `GET /api/users/me` — Get current user profile
 - `PUT /api/users/me` — Update profile
 
 ### Courses
+
 - `GET /api/courses` — List all courses (with filters)
 - `GET /api/courses/:id` — Get course details
 - `POST /api/courses/:id/enroll` — Enroll in course
 
 ### Progress
+
 - `GET /api/progress` — Get all user progress
 - `GET /api/progress/:courseId` — Get course progress
 - `PUT /api/progress/:courseId` — Update progress
 
 ### Sessions
+
 - `GET /api/sessions` — List sessions
 - `POST /api/sessions/:id/join` — Join session
 
 ### Quizzes
+
 - `GET /api/quizzes/:courseId` — Get quiz for course
 - `POST /api/quizzes/:id/submit` — Submit quiz answers
 
 ### AI (Gemini)
+
 - `POST /api/ai/chat` — AI chat with context
 - `POST /api/ai/roadmap` — Generate learning roadmap
 - `POST /api/ai/analyze-notes` — Analyze and transform notes
@@ -213,6 +225,7 @@ GEN AILERNER/
 The application uses a consistent design system:
 
 ### Colors
+
 - `--bg: #050a12` — Page background
 - `--surface: #0c1624` — Card layer 1
 - `--panel: #101e30` — Card layer 2
@@ -222,10 +235,12 @@ The application uses a consistent design system:
 - `--red: #ff4e6a` — Danger / live
 
 ### Typography
+
 - **Syne** (400–800) — Headings, body text
 - **DM Mono** (300–400) — Labels, badges, code
 
 ### Animations
+
 - `fadeUp` — Page entry animation
 - `scan` — Cockpit scan line
 - `pulse-logo` — Logo pulse
@@ -233,26 +248,10 @@ The application uses a consistent design system:
 - `bounce` — Typing indicator
 - `grow` — Progress bar fill
 
-## Deployment
-
-### Backend → Render
-
-1. Push `server/` to GitHub
-2. Create Web Service on Render
-3. Set environment variables
-4. Build: `npm install`
-5. Start: `node index.js`
-
-### Frontend → Vercel
-
-1. Push `client/` to GitHub
-2. Connect to Vercel
-3. Build: `npm run build`
-4. Output: `dist`
-
 ## Demo
 
 After seeding, login with:
+
 - **Email:** demo@aileraner.com
 - **Password:** demo123
 
