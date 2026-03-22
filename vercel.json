@@ -3,7 +3,6 @@
   "buildCommand": "cd client && npm install && npm run build",
   "outputDirectory": "client/dist",
   "installCommand": "npm install && cd server && npm install && cd ../client && npm install",
-  "devCommand": "npm run dev",
   "public": false,
   "framework": "vite",
   "env": {
@@ -23,7 +22,14 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "/server"
+      "destination": "/server/index.js"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/api",
+      "destination": "/api/health",
+      "statusCode": 303
     }
   ]
 }
