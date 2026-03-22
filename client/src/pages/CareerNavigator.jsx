@@ -349,7 +349,143 @@ const CareerNavigator = () => {
           .career-grid { grid-template-columns: 1fr; }
           .resource-links { grid-template-columns: 1fr 1fr; }
         }
-      `}</style>
+
+        @media (max-width: 768px) {
+          .career-grid {
+            gap: 1rem;
+          }
+
+          .panel-header {
+            padding: 0.75rem 1rem;
+            font-size: 0.65rem;
+          }
+
+          .panel-body {
+            padding: 1rem;
+          }
+
+          .role-card {
+            padding: 0.875rem 1rem;
+            margin-bottom: 0.6rem;
+          }
+
+          .role-title {
+            font-size: 0.85rem;
+          }
+
+          .skill-gap-list {
+            gap: 0.6rem;
+          }
+
+          .skill-name {
+            min-width: 80px;
+            font-size: 0.75rem;
+          }
+
+          .action-item {
+            padding: 0.875rem 1rem;
+          }
+
+          .action-title {
+            font-size: 0.8rem;
+          }
+
+          .action-desc {
+            font-size: 0.7rem;
+          }
+
+          .resource-links {
+            grid-template-columns: 1fr;
+            gap: 0.75rem;
+          }
+
+          .resource-link {
+            padding: 0.75rem;
+            font-size: 0.78rem;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .panel {
+            border-radius: 10px;
+          }
+
+          .role-top {
+            flex-direction: column;
+            gap: 0.25rem;
+          }
+
+          .role-salary {
+            font-size: 0.65rem;
+          }
+
+          .role-company {
+            font-size: 0.7rem;
+          }
+
+          .skill-row {
+            gap: 0.5rem;
+          }
+
+          .skill-name {
+            min-width: 70px;
+            font-size: 0.7rem;
+          }
+
+          .skill-pct {
+            font-size: 0.6rem;
+            min-width: 30px;
+          }
+
+          .course-links {
+            gap: 0.5rem;
+          }
+
+          .course-link-card {
+            padding: 0.6rem 0.75rem;
+            gap: 0.75rem;
+          }
+
+          .course-link-icon {
+            font-size: 1.2rem;
+          }
+
+          .course-link-title {
+            font-size: 0.8rem;
+          }
+
+          .course-link-meta {
+            font-size: 0.65rem;
+          }
+        }
+
+        @media (max-width: 320px) {
+          .panel-body {
+            padding: 0.75rem;
+          }
+
+          .role-card {
+            padding: 0.75rem;
+          }
+
+          .skill-track {
+            height: 4px;
+          }
+
+          .action-item {
+            padding: 0.75rem;
+          }
+
+          .action-icon {
+            font-size: 1rem;
+          }
+
+          .action-link {
+            display: none;
+          }
+        }
+      `}
+      </style>
     </>
   );
 };

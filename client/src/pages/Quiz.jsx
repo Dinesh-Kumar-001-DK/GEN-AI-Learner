@@ -434,6 +434,136 @@ const Quiz = () => {
         .empty-state p {
           margin-bottom: 1.5rem;
         }
+
+        @media (max-width: 768px) {
+          .quiz-header h1 {
+            font-size: 1.5rem;
+          }
+
+          .question-card {
+            padding: 1.5rem;
+            border-radius: 12px;
+          }
+
+          .question-text {
+            font-size: 1rem;
+          }
+
+          .option-btn {
+            padding: 0.875rem 1rem;
+            font-size: 0.9rem;
+          }
+
+          .option-letter {
+            width: 28px;
+            height: 28px;
+            font-size: 0.8rem;
+          }
+
+          .question-actions {
+            flex-direction: column;
+            gap: 1rem;
+          }
+
+          .question-actions .btn {
+            width: 100%;
+          }
+
+          .results-card {
+            padding: 1.5rem;
+            border-radius: 12px;
+          }
+
+          .score-display {
+            flex-direction: column;
+            text-align: center;
+            padding: 1.5rem;
+            gap: 1rem;
+          }
+
+          .score-status h2,
+          .score-status p {
+            text-align: center;
+          }
+
+          .score-details {
+            flex-direction: column;
+            gap: 1rem;
+          }
+
+          .results-actions {
+            flex-direction: column;
+          }
+
+          .results-actions .btn {
+            width: 100%;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .quiz-header {
+            margin-bottom: 1.5rem;
+          }
+
+          .quiz-header h1 {
+            font-size: 1.3rem;
+          }
+
+          .question-card {
+            padding: 1rem;
+          }
+
+          .question-text {
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+          }
+
+          .options-list {
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+          }
+
+          .option-btn {
+            padding: 0.75rem;
+            gap: 0.75rem;
+          }
+
+          .option-letter {
+            width: 26px;
+            height: 26px;
+            font-size: 0.75rem;
+          }
+
+          .option-text {
+            font-size: 0.85rem;
+          }
+
+          .score-circle {
+            width: 80px;
+            height: 80px;
+          }
+
+          .score-value {
+            font-size: 1.5rem;
+          }
+
+          .results-card {
+            padding: 1.25rem;
+          }
+        }
+
+        @media (max-width: 320px) {
+          .option-btn {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.5rem;
+          }
+
+          .option-letter {
+            width: 24px;
+            height: 24px;
+          }
+        }
       `}</style>
     </>
   );

@@ -154,6 +154,56 @@ const Footer = () => {
             text-align: center;
           }
         }
+
+        @media (max-width: 480px) {
+          .footer {
+            padding: 3rem 1rem 1.5rem;
+          }
+
+          .footer-links {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+          }
+
+          .footer-col {
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1rem;
+          }
+
+          .footer-col:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+          }
+
+          .footer-col h4 {
+            margin-bottom: 0.75rem;
+          }
+
+          .footer-col a {
+            padding: 0.3rem 0;
+            margin-bottom: 0.3rem;
+          }
+
+          .footer-bottom {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+          }
+
+          .footer-copy,
+          .footer-status {
+            font-size: 0.65rem;
+          }
+        }
+
+        @media (max-width: 320px) {
+          .footer {
+            padding: 2.5rem 0.875rem 1.25rem;
+          }
+
+          .footer-tagline {
+            font-size: 0.8rem;
+          }
+        }
       `}</style>
     </footer>
   );

@@ -508,7 +508,117 @@ const FlightAnalytics = () => {
           .kpi-row { grid-template-columns: 1fr 1fr; }
           .charts-row { grid-template-columns: 1fr; }
         }
-      `}</style>
+
+        @media (max-width: 768px) {
+          .kpi-row {
+            gap: 0.75rem;
+          }
+
+          .kpi {
+            padding: 1rem;
+          }
+
+          .kpi-val {
+            font-size: 1.5rem;
+          }
+
+          .chart-header {
+            padding: 0.75rem 1rem;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.5rem;
+          }
+
+          .chart-title {
+            font-size: 0.65rem;
+          }
+
+          .chart-body {
+            padding: 1rem;
+          }
+
+          .bar-chart {
+            height: 100px;
+          }
+
+          .donut-wrap {
+            flex-direction: column;
+            align-items: center;
+          }
+
+          .legend {
+            width: 100%;
+          }
+
+          .leg-item {
+            justify-content: space-between;
+          }
+
+          .insight-card {
+            padding: 1rem;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .kpi-row {
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+          }
+
+          .kpi {
+            padding: 0.75rem;
+          }
+
+          .kpi-val {
+            font-size: 1.3rem;
+          }
+
+          .kpi-label {
+            font-size: 0.55rem;
+          }
+
+          .charts-row {
+            gap: 0.875rem;
+          }
+
+          .chart-card {
+            border-radius: 10px;
+          }
+
+          .bar-chart {
+            height: 80px;
+            gap: 4px;
+          }
+
+          .heatmap {
+            grid-template-columns: repeat(7, 1fr);
+            gap: 3px;
+          }
+
+          .heat-cell {
+            height: 14px;
+          }
+
+          .insight-item {
+            font-size: 0.78rem;
+          }
+        }
+
+        @media (max-width: 320px) {
+          .kpi-row {
+            grid-template-columns: 1fr;
+          }
+
+          .kpi-val {
+            font-size: 1.2rem;
+          }
+
+          .bar-chart {
+            height: 60px;
+          }
+        }
+      `}
+      </style>
     </>
   );
 };

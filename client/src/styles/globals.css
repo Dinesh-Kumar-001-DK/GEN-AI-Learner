@@ -315,4 +315,82 @@ h4 { font-size: 1.1rem; }
     padding-top: 80px;
     padding-bottom: 60px;
   }
+
+  h1 { font-size: clamp(1.8rem, 6vw, 2.5rem); }
+  h2 { font-size: clamp(1.5rem, 5vw, 2rem); }
+  h3 { font-size: 1.1rem; }
+
+  .btn-lg {
+    padding: 12px 20px;
+    font-size: 0.9rem;
+  }
+
+  .card {
+    border-radius: 10px;
+  }
+
+  .badge {
+    font-size: 0.6rem;
+    padding: 3px 8px;
+  }
+
+  .input-field {
+    padding: 10px 14px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 0.875rem;
+  }
+
+  .page {
+    padding-top: 70px;
+    padding-bottom: 50px;
+  }
+
+  .btn {
+    padding: 10px 18px;
+    font-size: 0.85rem;
+  }
+
+  .btn-lg {
+    padding: 10px 16px;
+    font-size: 0.85rem;
+  }
+
+  .input-group {
+    margin-bottom: 1rem;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .container {
+    padding: 0 2rem;
+  }
+}
+
+@media (max-width: 320px) {
+  .btn {
+    padding: 8px 14px;
+    font-size: 0.8rem;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 500px) {
+  .page {
+    padding-top: 60px;
+    padding-bottom: 40px;
+  }
+}
+
+@media print {
+  body::before {
+    display: none;
+  }
+  
+  .navbar, .footer {
+    display: none;
+  }
 }

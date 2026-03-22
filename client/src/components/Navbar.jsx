@@ -1,13 +1,20 @@
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 const Navbar = ({ showBack = false, backTo = '/' }) => {
   const { user, logout, isAuthenticated } = useAuth();
   const navigate = useNavigate();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleLogout = () => {
     logout();
+    setMobileMenuOpen(false);
     navigate('/');
+  };
+
+  const closeMobileMenu = () => {
+    setMobileMenuOpen(false);
   };
 
   return (
@@ -44,6 +51,37 @@ const Navbar = ({ showBack = false, backTo = '/' }) => {
             <Link to="/login" className="nav-cta">Get Started</Link>
           )}
         </div>
+
+        <button 
+          className={`mobile-menu-btn ${mobileMenuOpen ? 'active' : ''}`}
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          aria-label="Toggle menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+
+      <div className={`mobile-menu ${mobileMenuOpen ? 'active' : ''}`}>
+        <Link to="/#features" onClick={closeMobileMenu}>Features</Link>
+        <Link to="/courses" onClick={closeMobileMenu}>Courses</Link>
+        <Link to="/#pricing" onClick={closeMobileMenu}>Pricing</Link>
+        
+        {isAuthenticated ? (
+          <>
+            <Link to="/dashboard" onClick={closeMobileMenu}>Dashboard</Link>
+            <Link to="/ai-tutor" onClick={closeMobileMenu} className="nav-link-ai">AI Tutor</Link>
+            <div className="mobile-user">
+              <span className="user-name">{user?.name?.split(' ')[0]}</span>
+            </div>
+            <button onClick={handleLogout} className="btn btn-outline btn-sm mobile-logout">
+              Logout
+            </button>
+          </>
+        ) : (
+          <Link to="/login" className="mobile-cta" onClick={closeMobileMenu}>Get Started</Link>
+        )}
       </div>
 
       <style>{`
@@ -54,7 +92,7 @@ const Navbar = ({ showBack = false, backTo = '/' }) => {
           right: 0;
           z-index: 100;
           height: 68px;
-          background: rgba(5, 10, 18, 0.9);
+          background: rgba(5, 10, 18, 0.95);
           backdrop-filter: blur(14px);
           border-bottom: 1px solid var(--border);
         }
@@ -73,6 +111,7 @@ const Navbar = ({ showBack = false, backTo = '/' }) => {
           display: flex;
           align-items: center;
           gap: 10px;
+          z-index: 101;
         }
 
         .logo-icon {
@@ -102,6 +141,7 @@ const Navbar = ({ showBack = false, backTo = '/' }) => {
           font-size: 0.85rem;
           font-weight: 600;
           transition: color 0.2s;
+          z-index: 101;
         }
 
         .back-btn:hover {
@@ -176,9 +216,143 @@ const Navbar = ({ showBack = false, backTo = '/' }) => {
           color: var(--text);
         }
 
+        .mobile-menu-btn {
+          display: none;
+          flex-direction: column;
+          justify-content: space-between;
+          width: 24px;
+          height: 18px;
+          background: none;
+          border: none;
+          cursor: pointer;
+          padding: 0;
+          z-index: 101;
+        }
+
+        .mobile-menu-btn span {
+          display: block;
+          width: 100%;
+          height: 2px;
+          background: var(--text);
+          transition: all 0.3s ease;
+        }
+
+        .mobile-menu-btn.active span:nth-child(1) {
+          transform: translateY(8px) rotate(45deg);
+        }
+
+        .mobile-menu-btn.active span:nth-child(2) {
+          opacity: 0;
+        }
+
+        .mobile-menu-btn.active span:nth-child(3) {
+          transform: translateY(-8px) rotate(-45deg);
+        }
+
+        .mobile-menu {
+          display: none;
+          position: fixed;
+          top: 68px;
+          left: 0;
+          right: 0;
+          background: rgba(5, 10, 18, 0.98);
+          backdrop-filter: blur(14px);
+          border-bottom: 1px solid var(--border);
+          padding: 1.5rem;
+          flex-direction: column;
+          gap: 0.5rem;
+          transform: translateY(-100%);
+          opacity: 0;
+          transition: all 0.3s ease;
+          z-index: 99;
+        }
+
+        .mobile-menu.active {
+          transform: translateY(0);
+          opacity: 1;
+        }
+
+        .mobile-menu a,
+        .mobile-menu button {
+          display: block;
+          padding: 0.75rem 1rem;
+          color: var(--muted);
+          font-size: 0.95rem;
+          font-weight: 600;
+          text-align: left;
+          background: none;
+          border: none;
+          border-radius: 8px;
+          transition: all 0.2s;
+          width: 100%;
+        }
+
+        .mobile-menu a:hover,
+        .mobile-menu button:hover {
+          background: var(--surface);
+          color: var(--cyan);
+        }
+
+        .mobile-menu .nav-link-ai {
+          color: var(--teal) !important;
+        }
+
+        .mobile-user {
+          padding: 0.5rem 1rem;
+          color: var(--text);
+          font-weight: 600;
+        }
+
+        .mobile-logout {
+          margin-top: 0.5rem;
+          border-color: var(--red);
+          color: var(--red);
+        }
+
+        .mobile-cta {
+          background: var(--cyan);
+          color: #050a12 !important;
+          text-align: center;
+          font-weight: 700 !important;
+          margin-top: 0.5rem;
+        }
+
         @media (max-width: 768px) {
           .nav-links {
             display: none;
+          }
+
+          .mobile-menu-btn {
+            display: flex;
+          }
+
+          .mobile-menu {
+            display: flex;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .nav-container {
+            padding: 0 1rem;
+          }
+
+          .logo-text {
+            font-size: 1.1rem;
+          }
+
+          .logo-icon {
+            width: 26px;
+            height: 26px;
+          }
+
+          .mobile-menu {
+            padding: 1rem;
+          }
+
+          .mobile-menu a,
+          .mobile-menu button {
+            padding: 0.6rem 0.875rem;
+            font-size: 0.9rem;
           }
         }
       `}</style>

@@ -360,6 +360,79 @@ const Dashboard = () => {
             grid-template-columns: 1fr;
           }
         }
+
+        @media (max-width: 768px) {
+          .dashboard-header {
+            flex-direction: column;
+            gap: 1rem;
+            text-align: center;
+          }
+
+          .dashboard-header h1 {
+            font-size: 1.5rem;
+          }
+
+          .kpi-row {
+            gap: 0.75rem;
+          }
+
+          .course-progress-item {
+            padding: 0.75rem;
+            gap: 0.75rem;
+          }
+
+          .course-thumb {
+            width: 50px;
+            height: 38px;
+          }
+
+          .course-percent {
+            font-size: 0.85rem;
+          }
+
+          .session-item {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.5rem;
+          }
+
+          .session-meta {
+            flex-direction: row;
+            align-items: center;
+            gap: 0.75rem;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .kpi-row {
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+          }
+
+          .course-progress-item {
+            flex-wrap: wrap;
+          }
+
+          .course-percent {
+            width: 100%;
+            text-align: right;
+            margin-top: 0.25rem;
+          }
+
+          .session-meta {
+            flex-wrap: wrap;
+          }
+        }
+
+        @media (max-width: 320px) {
+          .kpi-row {
+            grid-template-columns: 1fr;
+          }
+
+          .course-info h4 {
+            font-size: 0.85rem;
+          }
+        }
       `}</style>
     </>
   );

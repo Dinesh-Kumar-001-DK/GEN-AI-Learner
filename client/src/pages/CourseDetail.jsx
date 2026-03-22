@@ -838,6 +838,144 @@ learn_concept()`}</code>
             padding: 1rem;
           }
         }
+
+        @media (max-width: 768px) {
+          .course-header h1 {
+            font-size: 1.5rem;
+          }
+
+          .course-stats {
+            flex-wrap: wrap;
+            gap: 0.75rem;
+          }
+
+          .instructor-info {
+            flex-direction: column;
+            align-items: flex-start;
+          }
+
+          .module-header {
+            padding: 0.875rem 1rem;
+          }
+
+          .module-info {
+            gap: 0.75rem;
+          }
+
+          .module-title {
+            font-size: 0.9rem;
+          }
+
+          .lesson-item {
+            padding: 0.75rem 1rem 0.75rem 3rem;
+            font-size: 0.82rem;
+          }
+
+          .enroll-card {
+            margin-bottom: 2rem;
+          }
+
+          .enroll-btn {
+            width: calc(100% - 2rem);
+            margin: 1rem;
+          }
+
+          .lesson-modal-overlay {
+            padding: 0.5rem;
+          }
+
+          .lesson-modal {
+            max-height: 95vh;
+            border-radius: 12px;
+          }
+
+          .lesson-modal-header {
+            padding: 1rem;
+          }
+
+          .lesson-modal-body {
+            padding: 1rem;
+          }
+
+          .lesson-modal-footer {
+            padding: 0.75rem 1rem;
+            flex-direction: column;
+            gap: 0.5rem;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .course-detail-grid {
+            gap: 1.5rem;
+          }
+
+          .course-badges {
+            flex-wrap: wrap;
+          }
+
+          .course-stats {
+            font-size: 0.8rem;
+          }
+
+          .modules-section h2 {
+            font-size: 1.2rem;
+          }
+
+          .module-number {
+            width: 24px;
+            height: 24px;
+            font-size: 0.75rem;
+          }
+
+          .module-meta {
+            display: none;
+          }
+
+          .lesson-item {
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+          }
+
+          .lesson-title {
+            font-size: 0.8rem;
+          }
+
+          .lesson-video-badge {
+            display: none;
+          }
+
+          .lesson-modal-header h2 {
+            font-size: 1.1rem;
+          }
+
+          .lesson-video-container {
+            margin-bottom: 1rem;
+          }
+
+          .lesson-section {
+            padding: 1rem;
+          }
+
+          .lesson-code {
+            font-size: 0.75rem;
+            padding: 0.75rem;
+          }
+        }
+
+        @media (max-width: 320px) {
+          .module-header {
+            padding: 0.75rem;
+          }
+
+          .module-info {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.5rem;
+          }
+
+          .lesson-item {
+            padding: 0.6rem 0.75rem 0.6rem 2rem;
+          }
+        }
       `}</style>
     </>
   );

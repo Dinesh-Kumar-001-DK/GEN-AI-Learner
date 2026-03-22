@@ -325,6 +325,60 @@ const Courses = () => {
             flex-wrap: nowrap;
             padding-bottom: 0.5rem;
           }
+
+          .courses-grid {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+          }
+
+          .course-thumb {
+            height: 150px;
+          }
+
+          .course-body {
+            padding: 1rem;
+          }
+
+          .course-meta {
+            flex-wrap: wrap;
+            gap: 0.5rem;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .courses-header h1 {
+            font-size: 1.5rem;
+          }
+
+          .search-box {
+            min-width: 100%;
+          }
+
+          .difficulty-filter select {
+            min-width: 100%;
+          }
+
+          .course-thumb {
+            height: 140px;
+          }
+
+          .course-title {
+            font-size: 1rem;
+          }
+
+          .course-desc {
+            font-size: 0.78rem;
+          }
+        }
+
+        @media (max-width: 320px) {
+          .courses-grid {
+            grid-template-columns: 1fr;
+          }
+
+          .course-thumb {
+            height: 120px;
+          }
         }
       `}</style>
     </>

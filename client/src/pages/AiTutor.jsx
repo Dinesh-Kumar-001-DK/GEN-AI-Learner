@@ -355,6 +355,94 @@ const AiTutor = () => {
             max-width: 90%;
           }
         }
+
+        @media (max-width: 768px) {
+          .ai-tutor-page {
+            padding-top: 68px;
+          }
+
+          .tutor-container {
+            padding: 1.5rem 1rem;
+          }
+
+          .tutor-header h1 {
+            font-size: 1.8rem;
+          }
+
+          .chat-messages {
+            max-height: 350px;
+            padding: 1rem;
+          }
+
+          .chat-input {
+            padding: 0.75rem 1rem;
+          }
+
+          .send-btn {
+            padding: 10px 16px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .tutor-container {
+            padding: 1rem 0.875rem;
+          }
+
+          .chat-interface {
+            border-radius: 12px;
+          }
+
+          .chat-header {
+            padding: 0.75rem 1rem;
+          }
+
+          .chat-messages {
+            max-height: 300px;
+            padding: 0.875rem;
+          }
+
+          .message {
+            gap: 8px;
+          }
+
+          .message-avatar {
+            width: 28px;
+            height: 28px;
+            font-size: 0.8rem;
+          }
+
+          .bubble {
+            padding: 10px 14px;
+            font-size: 0.85rem;
+          }
+
+          .chat-input {
+            flex-direction: column;
+            gap: 0.5rem;
+          }
+
+          .chat-input .input-field {
+            width: 100%;
+          }
+
+          .send-btn {
+            width: 100%;
+            padding: 12px;
+          }
+
+          .tutor-stats {
+            grid-template-columns: 1fr;
+            gap: 0.75rem;
+          }
+
+          .stat-card {
+            padding: 1rem;
+          }
+
+          .stat-val {
+            font-size: 1.5rem;
+          }
+        }
       `}</style>
     </>
   );

@@ -299,6 +299,45 @@ const Progress = () => {
           .stats-grid { grid-template-columns: repeat(2, 1fr); }
           .roadmap-header { flex-direction: column; align-items: stretch; }
           .progress-summary { text-align: center; }
+
+          .phase { gap: 1.5rem; }
+          .phase-content { padding-bottom: 1.5rem; }
+          .node { width: 40px; height: 40px; font-size: 1rem; }
+        }
+
+        @media (max-width: 480px) {
+          .progress-header h1 { font-size: 1.5rem; }
+          
+          .roadmap-header { padding: 1rem; }
+          .path-buttons { gap: 0.4rem; }
+          .path-btn { padding: 6px 12px; font-size: 0.72rem; }
+          
+          .prog-percent { font-size: 2rem; }
+          
+          .roadmap { gap: 0; }
+          .phase { gap: 1rem; }
+          .phase-connector { flex-shrink: 0; }
+          .node { width: 36px; height: 36px; font-size: 0.9rem; }
+          .connector { height: 30px; }
+          
+          .phase-content { padding-bottom: 1.25rem; }
+          .phase-title { font-size: 1rem; }
+          .phase-desc { font-size: 0.8rem; }
+          
+          .phase-tags { gap: 4px; }
+          .tag { font-size: 0.6rem; padding: 2px 8px; }
+          
+          .stats-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+          
+          .course-item { padding: 0.75rem; gap: 0.75rem; }
+          .course-thumb { width: 50px; height: 38px; }
+          .course-info h4 { font-size: 0.85rem; }
+        }
+
+        @media (max-width: 320px) {
+          .phase { gap: 0.75rem; }
+          .node { width: 32px; height: 32px; }
+          .stats-grid { grid-template-columns: 1fr; }
         }
       `}</style>
     </>

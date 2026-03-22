@@ -170,7 +170,60 @@ const Register = () => {
           color: var(--cyan);
           font-weight: 600;
         }
-      `}</style>
+
+        @media (max-width: 480px) {
+          .auth-page {
+            padding: 1.5rem 1rem;
+          }
+
+          .auth-card {
+            padding: 1.75rem 1.25rem;
+            border-radius: 12px;
+          }
+
+          .auth-title {
+            font-size: 1.3rem;
+          }
+
+          .auth-sub {
+            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
+          }
+
+          .input-field {
+            padding: 10px 14px;
+            font-size: 16px;
+          }
+
+          .auth-submit {
+            padding: 12px 16px;
+          }
+        }
+
+        @media (max-width: 320px) {
+          .auth-page {
+            padding: 1rem 0.875rem;
+          }
+
+          .auth-card {
+            padding: 1.5rem 1rem;
+          }
+
+          .auth-logo {
+            margin-bottom: 1.5rem;
+          }
+
+          .logo-icon {
+            width: 26px;
+            height: 26px;
+          }
+
+          .logo-text {
+            font-size: 1.2rem;
+          }
+        }
+      `}
+      </style>
     </div>
   );
 };

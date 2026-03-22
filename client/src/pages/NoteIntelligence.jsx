@@ -468,7 +468,114 @@ Gradient descent optimizes the network by minimizing the loss function..."
           .note-grid { grid-template-columns: 1fr; }
           .summary-actions { flex-direction: column; }
         }
-      `}</style>
+
+        @media (max-width: 768px) {
+          .note-grid {
+            gap: 1rem;
+          }
+
+          .panel-body {
+            padding: 1rem;
+          }
+
+          .panel-header {
+            padding: 0.75rem 1rem;
+            font-size: 0.65rem;
+          }
+
+          .textarea {
+            min-height: 200px;
+            font-size: 0.85rem;
+          }
+
+          .analyze-btn {
+            padding: 12px;
+            font-size: 0.9rem;
+          }
+
+          .tab {
+            padding: 0.75rem 0.5rem;
+            font-size: 0.6rem;
+          }
+
+          .content-body {
+            min-height: 300px;
+          }
+
+          .empty-state {
+            padding: 2rem 1rem;
+          }
+
+          .empty-icon {
+            font-size: 2.5rem;
+          }
+
+          .flashcard {
+            padding: 1rem;
+          }
+
+          .quiz-item {
+            padding: 1rem;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .note-grid {
+            gap: 0.875rem;
+          }
+
+          .panel {
+            border-radius: 10px;
+          }
+
+          .tab-row {
+            overflow-x: auto;
+          }
+
+          .tab {
+            padding: 0.6rem 0.4rem;
+            font-size: 0.58rem;
+            white-space: nowrap;
+          }
+
+          .fc-q {
+            font-size: 0.85rem;
+          }
+
+          .fc-a {
+            font-size: 0.8rem;
+          }
+
+          .quiz-q {
+            font-size: 0.9rem;
+          }
+
+          .quiz-opt {
+            padding: 0.6rem 0.75rem;
+            font-size: 0.8rem;
+          }
+        }
+
+        @media (max-width: 320px) {
+          .panel-body {
+            padding: 0.75rem;
+          }
+
+          .badge {
+            display: none;
+          }
+
+          .quiz-options {
+            gap: 0.4rem;
+          }
+
+          .quiz-opt {
+            padding: 0.5rem 0.6rem;
+            font-size: 0.75rem;
+          }
+        }
+      `}
+      </style>
     </>
   );
 };

@@ -541,6 +541,121 @@ const Home = () => {
             padding: 70px 1.5rem;
           }
         }
+
+        @media (max-width: 768px) {
+          .hero {
+            padding: 80px 1rem 50px;
+            gap: 2.5rem;
+          }
+
+          .hero-tag {
+            font-size: 0.68rem;
+            padding: 5px 12px;
+            margin-bottom: 1.5rem;
+          }
+
+          .hero h1 {
+            font-size: 2.2rem;
+          }
+
+          .hero-sub {
+            font-size: 0.95rem;
+            margin-bottom: 1.8rem;
+          }
+
+          .hero-actions {
+            flex-direction: column;
+            gap: 0.75rem;
+          }
+
+          .hero-actions .btn {
+            width: 100%;
+          }
+
+          .cockpit {
+            padding: 1.2rem;
+          }
+
+          .gauge-row {
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 0.5rem;
+          }
+
+          .features-section,
+          .pricing-section {
+            padding: 50px 1rem;
+          }
+
+          .section-title {
+            margin-bottom: 0.75rem;
+          }
+
+          .section-sub {
+            font-size: 0.9rem;
+            margin-bottom: 2.5rem;
+          }
+
+          .features-grid {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+          }
+
+          .plans-grid {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+          }
+
+          .plan-card {
+            padding: 1.5rem;
+          }
+
+          .plan-price {
+            font-size: 2rem;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .hero {
+            padding: 70px 0.875rem 40px;
+          }
+
+          .hero h1 {
+            font-size: 1.8rem;
+          }
+
+          .cockpit {
+            padding: 1rem;
+            border-radius: 12px;
+          }
+
+          .gauge-row {
+            grid-template-columns: 1fr 1fr;
+          }
+
+          .gauge-row > *:last-child {
+            grid-column: span 2;
+          }
+
+          .features-section,
+          .pricing-section {
+            padding: 40px 0.875rem;
+          }
+
+          .plan-card {
+            padding: 1.25rem;
+          }
+        }
+
+        @media (max-width: 320px) {
+          .hero h1 {
+            font-size: 1.6rem;
+          }
+
+          .btn-lg {
+            padding: 10px 14px;
+            font-size: 0.85rem;
+          }
+        }
       `}</style>
     </>
   );
